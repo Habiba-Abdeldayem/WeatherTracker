@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">WeatherTrackerApp</string>
+    <string name="location_permission_title">Location Required</string>
+    <string name="location_permission_body">The App needs your location to show accurate weather.</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+</resources>
