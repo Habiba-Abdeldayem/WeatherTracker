@@ -1,4 +1,7 @@
 package com.example.weathertrackerapp.data.model
 
-class Location {
-}
+
+data class Location(
+    val latitude: Double,
+    val longitude: Double
+)

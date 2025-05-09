@@ -43,7 +43,7 @@ fun CurrentWeatherScreen(
                     if (PermissionUtils.shouldShowRationale(context, permission)) {
                         permissionViewModel.updateShowRational(true)
                     }
-                    Toast.makeText(context, "Camera permission was denied.", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Location permission was denied.", Toast.LENGTH_SHORT)
                         .show()
                 }
 
