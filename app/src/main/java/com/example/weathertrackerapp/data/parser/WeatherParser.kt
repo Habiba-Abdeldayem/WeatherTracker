@@ -1,6 +1,6 @@
 package com.example.weathertrackerapp.data.parser
 
-import com.example.weathertrackerapp.data.model.CurrentConditions
+import com.example.weathertrackerapp.data.model.CurrentWeather
 import com.example.weathertrackerapp.data.model.ForecastDay
 import com.example.weathertrackerapp.data.model.WeatherResponse
 import org.json.JSONArray
@@ -9,9 +9,9 @@ import org.json.JSONObject
 object WeatherParser {
     fun parse(jsonString: String): WeatherResponse {
         return try {
-        val json = JSONObject(jsonString)
+            val json = JSONObject(jsonString)
             WeatherResponse(
-                currentConditions = parseCurrentConditions(json.getJSONObject("currentConditions")),
+                currentWeather = parseCurrentConditions(json.getJSONObject("currentConditions")),
                 days = parseDays(json.getJSONArray("days"))
             )
         } catch (e: Exception) {
@@ -20,8 +20,8 @@ object WeatherParser {
 
     }
 
-    private fun parseCurrentConditions(json:JSONObject): CurrentConditions {
-        return CurrentConditions(
+    private fun parseCurrentConditions(json:JSONObject): CurrentWeather {
+        return CurrentWeather(
             temp = json.getDouble("temp").toFloat(),
             feelslike = json.getDouble("feelslike").toFloat(),
             conditions = json.getString("conditions"),

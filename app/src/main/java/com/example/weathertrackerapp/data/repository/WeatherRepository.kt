@@ -9,8 +9,9 @@ class WeatherRepository {
 
     fun getWeather(location: Location, callback: WeatherCallback) {
         WeatherApiClient.getCurrentWeather(location, object : WeatherCallback {
-            override fun onSuccess(weather: WeatherResponse) {
-                callback.onSuccess(weather)
+
+            override fun onSuccess(weatherResponse: WeatherResponse) {
+                callback.onSuccess(weatherResponse)
             }
 
             override fun onFailure(error: String) {

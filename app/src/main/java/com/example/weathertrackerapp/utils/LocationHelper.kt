@@ -3,22 +3,30 @@ package com.example.weathertrackerapp.utils
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.ContextCompat
+import com.example.weathertrackerapp.data.model.Location
 
 object LocationHelper {
-
     fun getLastKnownLocation(context: Context): Location? {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            val locationManager: LocationManager =
-                context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            val location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            return location
-        } else return null
+        // provider can be gps, network, passive
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val providers = locationManager.getProviders(true)
+
+        // first try GPS (most accurate), if not found try other providers
+        for (provider in providers.reversed()) {
+            try {
+                val location = locationManager.getLastKnownLocation(provider)
+                if (location != null) {
+                    return Location(
+                        location.latitude,
+                        location.longitude
+                    )
+                }
+            } catch (e: SecurityException) {
+                e.printStackTrace()
+            }
+        }
+        return null
     }
 }

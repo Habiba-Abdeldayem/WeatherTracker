@@ -4,5 +4,27 @@
     <string name="location_permission_body">The App needs your location to show accurate weather.</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
+    <string name="refresh">refresh</string>
+    <string name="navigate_to_forecast">Navigate to forecast</string>
+    <string name="navigate_to_current">Navigate to current</string>
+    <string name="no_internet_and_no_cache">No internet and no cached data available.</string>
+    <string name="weather_icon">Weather Icon</string>
+    <string name="location_label">Location: %1$s</string>
+    <string name="max_temp">↑ Max</string>
+    <string name="max_temp_value">%1$s°C</string>
+    <string name="max_forecast">↑ Max: %1$s°C</string>
+    <string name="min_temp">↓ Min</string>
+    <string name="min_forecast">↓ Min: %1$s°C</string>
+    <string name="min_temp_value">%1$s°C</string>
+    <string name="wind_speed">💨 Wind</string>
+    <string name="wind_speed_value">%1$s km/h</string>
+    <string name="humidity">💧 Humidity</string>
+    <string name="humidity_value">%1$s%%</string>
+    <string name="feels_like">Feels like: %1$s</string>
+    <string name="sunrise">☀️ Sunrise</string>
+    <string name="sunset">🌙 Sunset</string>
+    <string name="sunrise_value">%1$s AM</string>
+    <string name="sunset_value">%1$s PM</string>
+
 
 </resources>

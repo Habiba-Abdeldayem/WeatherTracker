@@ -3,7 +3,7 @@ package com.example.weathertrackerapp.data.model
 
 // contains real-time weather data for the exact moment the API request was made
 
-data class CurrentConditions (
+data class CurrentWeather (
     val temp:Float,
     val feelslike: Float,
     val humidity: Float,

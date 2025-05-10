@@ -10,9 +10,10 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
+
 class WeatherApiClient {
     interface WeatherCallback {
-        fun onSuccess(weather: WeatherResponse)
+        fun onSuccess(weatherResponse: WeatherResponse)
         fun onFailure(error: String)
     }
 

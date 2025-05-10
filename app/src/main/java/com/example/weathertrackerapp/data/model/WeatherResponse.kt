@@ -1,6 +1,7 @@
 package com.example.weathertrackerapp.data.model
 
 data class WeatherResponse(
-    val currentConditions: CurrentConditions,
-    val days: List<ForecastDay>
+    val currentWeather: CurrentWeather,
+    val days: List<ForecastDay>,
+    val lastUpdated: Long = 0L
 )
