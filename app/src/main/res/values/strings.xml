@@ -8,6 +8,8 @@
     <string name="navigate_to_forecast">Navigate to forecast</string>
     <string name="navigate_to_current">Navigate to current</string>
     <string name="no_internet_and_no_cache">No internet and no cached data available.</string>
+    <string name="location_permission_required">Location permission is required to continue.</string>
+    <string name="grant_permission">Grant Permission</string>
     <string name="weather_icon">Weather Icon</string>
     <string name="location_label">Location: %1$s</string>
     <string name="max_temp">↑ Max</string>

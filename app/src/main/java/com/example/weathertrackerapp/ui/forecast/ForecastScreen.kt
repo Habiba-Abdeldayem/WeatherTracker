@@ -26,9 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,7 +41,6 @@ import com.example.weathertrackerapp.ui.PermissionViewModel
 import com.example.weathertrackerapp.ui.current_weather.WeatherTopBar
 import com.example.weathertrackerapp.ui.theme.WeatherTrackerAppTheme
 import com.example.weathertrackerapp.utils.DateUtils
-import com.example.weathertrackerapp.utils.DateUtils.formatTo12HourTime
 import com.example.weathertrackerapp.utils.LocationHelper
 import com.example.weathertrackerapp.utils.getWeatherIcon
 
@@ -89,7 +86,10 @@ fun ForecastScreen(
             }
 
             is ApiResponse.Error -> {
-                Text(text = "Error loading forecast", modifier = Modifier.padding(padding))
+                Text(
+                    text = "Check Your Internet Connectivity",
+                    modifier = Modifier.padding(padding)
+                )
             }
 
             null -> {}
@@ -125,11 +125,11 @@ fun DayCard(
                     fontSize = 16.sp,
                     modifier = Modifier.padding(4.dp)
                 )
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row() {
                     val icon = getWeatherIcon(day.icon.replace("-", "_"))
                     Image(
                         painter = painterResource(id = icon),
-                        contentDescription = iconName,modifier=Modifier.size(24.dp),
+                        contentDescription = iconName, modifier = Modifier.size(24.dp),
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
@@ -138,26 +138,27 @@ fun DayCard(
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.width(8.dp))
+                }
+                Row() {
                     Text(
-                        text = stringResource(R.string.max_forecast,day.tempmax.toString()),
+                        text = stringResource(R.string.max_forecast, day.tempmax.toString()),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = stringResource(R.string.min_forecast,day.tempmin.toString()),
+                        text = stringResource(R.string.min_forecast, day.tempmin.toString()),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold
                     )
-
                 }
+
             }
 
 
         }
     }
 }
-
 
 
 @Preview(showBackground = true)

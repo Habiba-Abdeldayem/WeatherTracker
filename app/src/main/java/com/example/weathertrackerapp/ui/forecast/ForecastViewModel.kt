@@ -1,7 +1,6 @@
 package com.example.weathertrackerapp.ui.forecast
 
 import android.app.Application
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,28 +18,27 @@ import com.example.weathertrackerapp.utils.WeatherCacheHelper
 class ForecastViewModel(
     application: Application,
     private val repository: WeatherRepository
-): AndroidViewModel(application){
-//    val context = getApplication<Application>().applicationContext
+) : AndroidViewModel(application) {
+    //    val context = getApplication<Application>().applicationContext
     private val _forecastDays = MutableLiveData<ApiResponse<List<ForecastDay>>>()
     val forecastDays: LiveData<ApiResponse<List<ForecastDay>>> = _forecastDays
 
 
-
-    fun loadForecast(location:Location) {
+    fun loadForecast(location: Location) {
         val context = getApplication<Application>().applicationContext
 
-        if(!NetworkUtils.isNetworkAvailable(context)) {
+        if (!NetworkUtils.isNetworkAvailable(context)) {
             val cached = WeatherCacheHelper.getCachedForecast(context)
-            if(cached != null) {
+            if (cached != null) {
                 _forecastDays.postValue(ApiResponse.Success(cached))
             } else {
                 _forecastDays.postValue(ApiResponse.Error(context.getString(R.string.no_internet_and_no_cache)))
             }
-        return
+            return
         }
         _forecastDays.value = ApiResponse.Loading
 
-        repository.getWeather(location, object:WeatherApiClient.WeatherCallback {
+        repository.getWeather(location, object : WeatherApiClient.WeatherCallback {
             override fun onSuccess(weatherResponse: WeatherResponse) {
                 _forecastDays.postValue(ApiResponse.Success(weatherResponse.days))
                 WeatherCacheHelper.saveForecast(context, weatherResponse)

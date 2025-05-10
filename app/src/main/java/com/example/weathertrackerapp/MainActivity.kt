@@ -12,44 +12,41 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.weathertrackerapp.di.ViewModelFactory
-import com.example.weathertrackerapp.ui.MainEntryScreen
 import com.example.weathertrackerapp.ui.PermissionViewModel
-import com.example.weathertrackerapp.ui.current_weather.CurrentWeatherScreen
 import com.example.weathertrackerapp.ui.current_weather.CurrentWeatherViewModel
 import com.example.weathertrackerapp.ui.forecast.ForecastViewModel
 import com.example.weathertrackerapp.ui.navigation.WeatherNavGraph
 import com.example.weathertrackerapp.ui.theme.WeatherTrackerAppTheme
 
 class MainActivity : ComponentActivity() {
+
+    lateinit var permissionViewModel: PermissionViewModel
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
 
-            val factory = ViewModelFactory(application)
-            val currentWeatherViewModel  =  ViewModelProvider(this, factory)[CurrentWeatherViewModel::class.java]
-            val forecastViewModel  =  ViewModelProvider(this, factory)[ForecastViewModel::class.java]
-            val permissionViewModel: PermissionViewModel = viewModel()
-            val navController = rememberNavController()
-            WeatherNavGraph(
-                navController = navController,
-                currentWeatherViewModel = currentWeatherViewModel,
-                permissionViewModel = permissionViewModel,
-                forecastViewModel = forecastViewModel
-            )
-//            MainEntryScreen(navController,permissionViewModel,currentWeatherViewModel)
-
             WeatherTrackerAppTheme {
-//                CurrentWeatherScreen(permissionViewModel, currentWeatherViewModel)
-
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//
-//                }
+                val factory = ViewModelFactory(application)
+                val currentWeatherViewModel =
+                    ViewModelProvider(this, factory)[CurrentWeatherViewModel::class.java]
+                val forecastViewModel =
+                    ViewModelProvider(this, factory)[ForecastViewModel::class.java]
+                permissionViewModel = viewModel()
+                val navController = rememberNavController()
+                WeatherNavGraph(
+                    navController = navController,
+                    currentWeatherViewModel = currentWeatherViewModel,
+                    permissionViewModel = permissionViewModel,
+                    forecastViewModel = forecastViewModel
+                )
             }
 
         }
     }
+
 }
 
 

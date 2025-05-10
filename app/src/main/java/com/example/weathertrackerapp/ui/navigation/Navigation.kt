@@ -3,7 +3,6 @@ package com.example.weathertrackerapp.ui.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,11 +16,11 @@ import com.example.weathertrackerapp.ui.forecast.ForecastScreen
 import com.example.weathertrackerapp.ui.forecast.ForecastViewModel
 
 sealed class Screen(val route: String) {
-    object CurrentWeather: Screen("current_weather_screen")
-    object Forecast: Screen("forecast_screen")
-    object PermissionDenied: Screen("permission_denied_screen")
-    object NoInternet: Screen("no_internet_screen")
-    object MainEntryScreen: Screen("main_entry_screen")
+    object CurrentWeather : Screen("current_weather_screen")
+    object Forecast : Screen("forecast_screen")
+    object PermissionDenied : Screen("permission_denied_screen")
+    object NoInternet : Screen("no_internet_screen")
+    object MainEntryScreen : Screen("main_entry_screen")
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -34,9 +33,9 @@ fun WeatherNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "main_entry_screen"
+        startDestination = Screen.MainEntryScreen.route
     ) {
-        composable("main_entry_screen") {
+        composable(Screen.MainEntryScreen.route) {
             MainEntryScreen(
                 navController = navController,
                 permissionViewModel = permissionViewModel,
@@ -44,15 +43,15 @@ fun WeatherNavGraph(
             )
         }
 
-        composable("permission_denied_screen") {
+        composable(Screen.PermissionDenied.route) {
             PermissionDeniedScreen(navController)
         }
 
-        composable("no_internet_screen") {
+        composable(Screen.NoInternet.route) {
             NoInternetScreen({})
         }
 
-        composable("current_weather_screen") {
+        composable(Screen.CurrentWeather.route) {
             CurrentWeatherScreen(
                 permissionViewModel = permissionViewModel,
                 currentWeatherViewModel = currentWeatherViewModel,
@@ -60,7 +59,7 @@ fun WeatherNavGraph(
             )
         }
 
-        composable("forecast_screen") {
+        composable(Screen.Forecast.route) {
             ForecastScreen(
                 forecastViewModel = forecastViewModel,
                 permissionViewModel = permissionViewModel

@@ -55,12 +55,10 @@ fun CurrentWeatherScreen(
     permissionViewModel: PermissionViewModel,
     currentWeatherViewModel: CurrentWeatherViewModel,
     navController: NavController,
-    onNavigateToForecast: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     Scaffold(topBar = { WeatherTopBar() }) { padding ->
-//        RequestLocationPermissionHandler(permissionViewModel, currentWeatherViewModel,navController)
         Column(
             modifier = Modifier
                 .padding(padding)
@@ -76,10 +74,12 @@ fun CurrentWeatherScreen(
                 }
 
                 is ApiResponse.Success<WeatherResponse> -> {
-                    CurrentWeatherContent(state.data.currentWeather)
                     val formattedTime = formatTimestamp(state.data.lastUpdated)
-                    Text("Last updated: $formattedTime")
+                    Log.d("debug", "Error: ${state.data}")
 
+                    CurrentWeatherContent(state.data.currentWeather)
+                    Spacer(Modifier.height(4.dp))
+                    Text("Last updated: $formattedTime")
                 }
 
                 is ApiResponse.Error -> {
@@ -88,8 +88,8 @@ fun CurrentWeatherScreen(
             }
             Spacer(modifier.height(dimensionResource(R.dimen.small_spacing)))
             Button(onClick = {
-//                LocationHelper.getLastKnownLocation(context)
-//                    ?.let { currentWeatherViewModel.loadWeather(location = it) }
+                LocationHelper.getLastKnownLocation(context)
+                    ?.let { currentWeatherViewModel.loadWeather(location = it) }
             }) { Text(text = stringResource(R.string.refresh)) }
             Spacer(modifier.height(dimensionResource(R.dimen.small_spacing)))
             Button(onClick = {
@@ -104,7 +104,7 @@ fun CurrentWeatherScreen(
 @Composable
 fun WeatherTopBar() {
     CenterAlignedTopAppBar(
-        title = { Text("Current Weather", fontWeight = FontWeight.Bold) },
+        title = { Text("Weather App", fontWeight = FontWeight.Bold) },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -134,22 +134,42 @@ fun CurrentWeatherContent(
             )
             Spacer(Modifier.width(24.dp))
             Column {
-            Text(text = weather.temp.toString(), style = MaterialTheme.typography.displayLarge)
-             Text(text = stringResource(R.string.feels_like, weather.feelslike.toString()), style = MaterialTheme.typography.bodyMedium)
-            Text(text = weather.conditions, style = MaterialTheme.typography.bodyLarge)
+                Text(text = weather.temp.toString(), style = MaterialTheme.typography.displayLarge)
+                Text(
+                    text = stringResource(R.string.feels_like, weather.feelslike.toString()),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(text = weather.conditions, style = MaterialTheme.typography.bodyLarge)
             }
 
         }
-        Row{
-            InfoCard(infoName = stringResource(R.string.humidity), infoValue = stringResource(R.string.humidity_value,weather.humidity.toString()))
+        Row {
+            InfoCard(
+                infoName = stringResource(R.string.humidity),
+                infoValue = stringResource(R.string.humidity_value, weather.humidity.toString())
+            )
             Spacer(Modifier.width(dimensionResource(R.dimen.big_spacing)))
-            InfoCard(infoName = stringResource(R.string.wind_speed), infoValue = stringResource(R.string.wind_speed_value,weather.windspeed))
+            InfoCard(
+                infoName = stringResource(R.string.wind_speed),
+                infoValue = stringResource(R.string.wind_speed_value, weather.windspeed)
+            )
         }
         Spacer(Modifier.height(dimensionResource(R.dimen.small_spacing)))
-        Row{
-            InfoCard(infoName = stringResource(R.string.sunrise), infoValue = formatTo12HourTime(stringResource(R.string.sunrise_value,weather.sunrise)))
+        Row {
+            InfoCard(
+                infoName = stringResource(R.string.sunrise),
+                infoValue = formatTo12HourTime(
+                    stringResource(
+                        R.string.sunrise_value,
+                        weather.sunrise
+                    )
+                )
+            )
             Spacer(Modifier.width(dimensionResource(R.dimen.big_spacing)))
-            InfoCard(infoName = stringResource(R.string.sunset), infoValue = stringResource(R.string.sunset_value,weather.sunset))
+            InfoCard(
+                infoName = stringResource(R.string.sunset),
+                infoValue = stringResource(R.string.sunset_value, weather.sunset)
+            )
         }
     }
 }
@@ -171,7 +191,7 @@ fun InfoCard(infoName: String, infoValue: String, modifier: Modifier = Modifier)
                 .padding(dimensionResource(R.dimen.small_spacing))
         ) {
             Text(
-                text = infoName, fontSize = 20.sp, fontWeight = FontWeight.Bold
+                text = infoName, fontSize = 18.sp, fontWeight = FontWeight.Bold
             )
             Spacer(Modifier.height(dimensionResource(R.dimen.small_spacing)))
             Text(

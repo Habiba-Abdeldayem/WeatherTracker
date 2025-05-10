@@ -1,7 +1,9 @@
 package com.example.weathertrackerapp.ui.current_weather
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,9 +29,11 @@ class CurrentWeatherViewModel(
             val cached = WeatherCacheHelper.getCachedWeather(context)
             if(cached != null) {
                 _weather.postValue(ApiResponse.Success(cached))
+                Toast.makeText(context, "No Internet Connection, Loaded cached data", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, cached.toString())
             } else {
                 _weather.postValue(ApiResponse.Error("No internet and no cached data available."))
+                Toast.makeText(context, "No internet and no cached data available.", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "No internet and no cached data available.")
 
             }
@@ -49,5 +53,9 @@ class CurrentWeatherViewModel(
             }
 
         })
+    }
+
+    fun hasCachedData(context: Context): Boolean {
+        return WeatherCacheHelper.getCachedWeather(context) != null
     }
 }

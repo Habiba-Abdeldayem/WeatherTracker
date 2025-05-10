@@ -24,7 +24,6 @@ object DateUtils {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun formatTo12HourTime(datetime: String): String {
-//        val inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
         val inputFormat = DateTimeFormatter.ofPattern("HH:mm:ss")
         val outputFormat = DateTimeFormatter.ofPattern("hh:mm a")
         return try {
